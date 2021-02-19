@@ -1,6 +1,8 @@
 FROM golang:1.14.3-alpine AS build
 WORKDIR /src
 COPY . .
-RUN go build -o /bin .
+RUN go build -o /go/bin/rocks .
+
 FROM scratch AS bin
-COPY --from=build /bin/rocks /
+COPY --from=build /go/bin/rocks /go/bin/rocks
+ENTRYPOINT [ "/go/bin/rocks" ]
